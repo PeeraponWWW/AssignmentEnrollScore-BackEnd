@@ -1,0 +1,93 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  // output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Teachers {
+  idTeacher String @id @default(uuid())
+  username String @unique
+  password String
+  fName String
+  lName String
+  subjects Subjects[]
+  createdAt                 DateTime                    @default(now())
+  updatedAt                 DateTime                    @updatedAt
+  deletedAt                 DateTime?
+}
+
+model Subjects {
+  idSubject String @id @default(uuid())
+  subjectName String
+  subjectCode String
+  teachBy String
+  assignments Assignments[]
+  teachers Teachers @relation(fields: [teachBy], references: [idTeacher])
+  hasTeacherAssistants SubjectHasTeacherAssistants[]
+  createdAt                 DateTime                    @default(now())
+  updatedAt                 DateTime                    @updatedAt
+  deletedAt                 DateTime?
+}
+
+model TeacherAssistants {
+  idTeacherAssistant String @id @default(uuid())
+  username String @unique
+  password String
+  fName String
+  lName String
+  hasSubject SubjectHasTeacherAssistants[]
+  createdAt                 DateTime                    @default(now())
+  updatedAt                 DateTime                    @updatedAt
+  deletedAt                 DateTime?
+}
+
+model SubjectHasTeacherAssistants {
+  idSubjectHasTeacherAssistant String @id @default(uuid())
+  idSubject String
+  idTeacherAssistant String
+
+  subjects Subjects @relation(fields: [idSubject], references: [idSubject])
+  teacherAssistants TeacherAssistants @relation(fields: [idTeacherAssistant], references: [idTeacherAssistant])
+
+  createdAt                 DateTime                    @default(now())
+  updatedAt                 DateTime                    @updatedAt
+  deletedAt                 DateTime?
+}
+
+model Assignments {
+  idAssignment String @id @default(uuid())
+  title String
+  maxScore Int
+  subjectId String
+  scoreboard AssignmentScoreboard[]
+  subject Subjects @relation(fields: [subjectId], references: [idSubject])
+  createdAt                 DateTime                    @default(now())
+  updatedAt                 DateTime                    @updatedAt
+  deletedAt                 DateTime?
+}
+
+model AssignmentScoreboard {
+  idAssignmentScoreboard String @id @default(uuid())
+  idAssignment String
+  studentId String
+  title String
+  fName String
+  lName String
+  score Int
+  note String?
+  assignments Assignments @relation(fields: [idAssignment], references: [idAssignment])
+  createdAt                 DateTime                    @default(now())
+  updatedAt                 DateTime                    @updatedAt
+  deletedAt                 DateTime?
+}
+
