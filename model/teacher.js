@@ -1,50 +1,72 @@
 import db from "../prisma/client.js";
 
 export const createTeacher = async (data) => {
-    const teacher = await db.teachers.create({
-        data,
-    });
-    if (teacher) {
+    try {
+        const teacher = await db.teachers.create({
+            data,
+        });
         return teacher;
+    } catch (error) {
+        console.error("Error creating teacher:", error);
+        return null;
     }
-    return null;
 };
 
 export const getTeacherById = async (id) => {
-    const teacher = await db.teachers.findUnique({
-        where: { id },
-    });
-    if (teacher) {
+    try {
+        const teacher = await db.teachers.findUnique({
+            where: { id },
+        });
         return teacher;
+    } catch (error) {
+        console.error("Error getting teacher by ID:", error);
+        return null;
     }
-    return null;
+};
+
+export const getTeacherByUsername = async (username) => {
+    try {
+        const teacher = await db.teachers.findUnique({
+            where: { username },
+        });
+        return teacher;
+    } catch (error) {
+        console.error("Error getting teacher by username:", error);
+        return null;
+    }
 };
 
 export const getAllTeachers = async () => {
-    const teachers = await db.teachers.findMany();
-    if (teachers) {
+    try {
+        const teachers = await db.teachers.findMany();
         return teachers;
+    } catch (error) {
+        console.error("Error getting all teachers:", error);
+        return [];
     }
-    return [];
 };
 
 export const updateTeacher = async (id, data) => {
-    const teacher = await db.teachers.update({
-        where: { id },
-        data,
-    });
-    if (teacher) {
+    try {
+        const teacher = await db.teachers.update({
+            where: { id },
+            data,
+        });
         return teacher;
+    } catch (error) {
+        console.error("Error updating teacher:", error);
+        return null;
     }
-    return null;
 };
 
 export const deleteTeacher = async (id) => {
-    const teacher = await db.teachers.delete({
-        where: { id },
-    });
-    if (teacher) {
+    try {
+        const teacher = await db.teachers.delete({
+            where: { id },
+        });
         return teacher;
+    } catch (error) {
+        console.error("Error deleting teacher:", error);
+        return null;
     }
-    return null;
 };

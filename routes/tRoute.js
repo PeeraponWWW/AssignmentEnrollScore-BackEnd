@@ -5,6 +5,6 @@ import {
 const router = Router();
 
 
-router.post('/createTeacher', createTeacher);
+router.post('/teacher', createTeacher);
 
 export default router;
