@@ -7,3 +7,7 @@ export const createToken = (data) => {
 export const verifyToken = (token) => {
     return jwt.verify(token, process.env.JWT_SECRET_KEY);
 }
+
+export const decodeToken = (token) => {
+    return jwt.decode(token);
+}

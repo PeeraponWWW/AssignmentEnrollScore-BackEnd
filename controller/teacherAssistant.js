@@ -11,7 +11,8 @@ export const taLogin = async (req, res) => {
     if (!isPasswordValid) {
         return res.status(401).json({ status: 'error', message: 'รหัสผ่านไม่ถูกต้อง' });
     }
-    return res.status(200).json({ status: 'success', message: 'เข้าสู่ระบบสำเร็จ', role: 'TA' });
+    const token = createToken({ username: teacher.username, role: 'teacher' });
+    return res.status(200).json({ status: 'success', token: token });
 };
 
 export const createTeacherAssistant = async (req, res) => {

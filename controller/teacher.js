@@ -4,8 +4,10 @@ import { createToken } from '../helper/jwtAuth.js';
 
 export const tLogin = async (req, res) => {
     const { username, password } = req.body;
+    // console.log(username, password);
     try {
         const teacher = await tModel.getTeacherByUsername(username);
+        // console.log(teacher);
         if (!teacher) {
             return res.status(404).json({ status: 'error', message: 'ไม่พบครูที่มีชื่อผู้ใช้ดังกล่าว' });
         }
@@ -13,9 +15,10 @@ export const tLogin = async (req, res) => {
         if (!isPasswordValid) {
             return res.status(401).json({ status: 'error', message: 'รหัสผ่านไม่ถูกต้อง' });
         }
+        // console.log(isPasswordValid);
         const token = createToken({ username: teacher.username, role: 'teacher' });
-        
-        return res.status(200).json({ status: 'success', message: 'เข้าสู่ระบบสำเร็จ'});
+        // console.log(token);
+        return res.status(200).json({ status: 'success' , token: token});
     } catch (error) {
         console.error("Error during teacher login:", error);
         return res.status(500).json({ status: 'error', message: 'เกิดข้อผิดพลาดในการเข้าสู่ระบบ' });

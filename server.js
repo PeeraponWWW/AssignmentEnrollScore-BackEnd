@@ -30,8 +30,7 @@ app.use(cors(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/login', authRouter);
-// app.use('/authCheck', )
+app.use('/auth', authRouter);
 app.use('/t', teacherRouter);
 app.use('/ta', teacherAssistant);
 

@@ -7,7 +7,7 @@ export const isAuth = (req, res, next ) => {
                 return res.status(401).json({ status: 'error', message: 'Unauthorized' });
             }
             req.user = decoded;
-            next();
+        next();
     });
     } else {
         return res.status(401).json({ status: 'error', message: 'Unauthorized' });
