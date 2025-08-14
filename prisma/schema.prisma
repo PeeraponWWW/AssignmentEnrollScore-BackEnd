@@ -20,6 +20,7 @@ model Teachers {
   password String
   fName String
   lName String
+  email String @unique
   subjects Subjects[]
   createdAt                 DateTime                    @default(now())
   updatedAt                 DateTime                    @updatedAt
@@ -45,6 +46,7 @@ model TeacherAssistants {
   password String
   fName String
   lName String
+  email String @unique
   hasSubject SubjectHasTeacherAssistants[]
   createdAt                 DateTime                    @default(now())
   updatedAt                 DateTime                    @updatedAt
