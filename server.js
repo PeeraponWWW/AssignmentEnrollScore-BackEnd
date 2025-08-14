@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser';
 import teacherRouter from './routes/tRoute.js';
 import teacherAssistant from './routes/taRoute.js';
 import authRouter from './routes/auth.js';
+import { isAuth } from './middleware/isAuth.js';
 
 // import cookieParser from "cookie-parser";
 dotenv.config();
@@ -31,8 +32,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/auth', authRouter);
-app.use('/t', teacherRouter);
-app.use('/ta', teacherAssistant);
+app.use('/t',isAuth, teacherRouter);
+app.use('/ta',isAuth, teacherAssistant);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

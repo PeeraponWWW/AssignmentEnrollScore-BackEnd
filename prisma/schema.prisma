@@ -31,6 +31,8 @@ model Subjects {
   idSubject String @id @default(uuid())
   subjectName String
   subjectCode String
+  term String
+  academicYear String
   teachBy String
   assignments Assignments[]
   teachers Teachers @relation(fields: [teachBy], references: [idTeacher])
